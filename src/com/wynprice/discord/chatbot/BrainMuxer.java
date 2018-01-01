@@ -15,9 +15,10 @@ import sx.blah.discord.handle.obj.IGuild;
 class BrainMuxer {
 
 	public static boolean saveBrain(ChatbotBrain brain, IGuild guild) {
-		String filename = guild.getLongID() + ".wyn";
-		if(!EventSystem.optedToUseLocal.contains(guild.getLongID()))
-			filename = "main-brain.wyn";
+		String filename = "main-brain.wyn";
+		if(guild != null && EventSystem.optedToUseLocal.contains(guild.getLongID()))
+			filename = guild.getLongID() + ".wyn";
+		
 		try {
 			File file = new File(filename);
 
@@ -36,9 +37,10 @@ class BrainMuxer {
 
 	public static ChatbotBrain loadBrain(IGuild guild) 
 	{
-		String filename = guild.getLongID() + ".wyn";
-		if(!EventSystem.optedToUseLocal.contains(guild.getLongID()))
-			filename = "main-brain.wyn";
+		String filename = "main-brain.wyn";
+		if(guild != null && EventSystem.optedToUseLocal.contains(guild.getLongID()))
+			filename = guild.getLongID() + ".wyn";
+
 		try {
 			// Check if file exists.
 			File file = new File(filename);

@@ -50,7 +50,7 @@ public class LearningChatbot {
 			System.out.println("INPUT: " + input);
 			System.out.println("OUTPUT: " + sentance);
 		}
-		BrainMuxer.saveBrain(brain, guild);
+//		BrainMuxer.saveBrain(brain, guild);
 	}
 	
 	public void digestSentance(String input)
