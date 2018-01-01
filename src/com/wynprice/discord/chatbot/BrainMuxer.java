@@ -7,13 +7,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import sx.blah.discord.handle.obj.IGuild;
+
 /**
  * Brain Muxer handle demuxing and remuxing the brain from a savefile.
  */
 class BrainMuxer {
 
-	public static boolean saveBrain(ChatbotBrain brain) {
-		String filename = "brain.wyn";
+	public static boolean saveBrain(ChatbotBrain brain, IGuild guild) {
+		String filename = guild.getLongID() + ".wyn";
+		if(!EventSystem.optedToUseLocal.contains(guild.getLongID()))
+			filename = "main-brain.wyn";
 		try {
 			File file = new File(filename);
 
@@ -30,15 +34,17 @@ class BrainMuxer {
 		return true;
 	}
 
-	public static ChatbotBrain loadBrain() 
+	public static ChatbotBrain loadBrain(IGuild guild) 
 	{
-		String filename = "brain.wyn";
+		String filename = guild.getLongID() + ".wyn";
+		if(!EventSystem.optedToUseLocal.contains(guild.getLongID()))
+			filename = "main-brain.wyn";
 		try {
 			// Check if file exists.
 			File file = new File(filename);
 			if (!file.exists()) {
 				System.err.println("File does not exist: " + filename);
-				return new ChatbotBrain();
+				return new ChatbotBrain(guild);
 			}
 
 			// load

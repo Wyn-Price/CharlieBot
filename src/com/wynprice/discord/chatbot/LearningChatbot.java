@@ -12,6 +12,7 @@ package com.wynprice.discord.chatbot;
  */
 
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IGuild;
 
 public class LearningChatbot {
 	/**
@@ -29,9 +30,9 @@ public class LearningChatbot {
 	/**
 	 * Starts LearningChatbot with restored brain.
 	 */
-	public LearningChatbot() 
+	public LearningChatbot(IGuild guild) 
 	{
-		brain = BrainMuxer.loadBrain();
+		brain = BrainMuxer.loadBrain(guild);
 		if (brain == null) {
 			throw new RuntimeException("That brain file is missing or invalid!");
 		}
@@ -40,15 +41,16 @@ public class LearningChatbot {
 	/**
 	 * Invocation method.
 	 */
-	public void continueConverstation(IChannel channel, String input) 
+	public void continueConverstation(IGuild guild, IChannel channel, String input) 
 	{
 		digestSentance(input);
 		if(!Main.OBSERVING || channel.isPrivate())
 		{	String sentance = brain.buildSentence();
 			channel.sendMessage(sentance);
-			System.out.println(sentance);
+			System.out.println("INPUT: " + input);
+			System.out.println("OUTPUT: " + sentance);
 		}
-		BrainMuxer.saveBrain(brain);
+		BrainMuxer.saveBrain(brain, guild);
 	}
 	
 	public void digestSentance(String input)

@@ -13,6 +13,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import sx.blah.discord.handle.obj.IGuild;
+
 /**
  * The ChatbotBrain holds references to all ChatWords and has various
  * methods to decompose and reconstruct sentences.
@@ -95,7 +97,7 @@ class ChatbotBrain implements Serializable {
 	/**
 	 * Gets the Chatbot started, sets up data structures necessary
 	 */
-	public ChatbotBrain() {
+	public ChatbotBrain(IGuild guild) {
 		observedWords = new HashMap<String,ChatWord>();
 		observedWords.put("\n",LearningChatbot.ENDWORD);
 		startWord = new ChatWord("");
@@ -109,7 +111,7 @@ class ChatbotBrain implements Serializable {
 
 		lastSentence = new FrequencyMap<Double, ChatWord>();
 		
-		BrainMuxer.saveBrain(this);
+		BrainMuxer.saveBrain(this, guild);
 	}
 
 	/**
