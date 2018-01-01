@@ -46,11 +46,14 @@ public class LearningChatbot {
 		digestSentance(input);
 		if(!Main.OBSERVING || channel.isPrivate())
 		{	String sentance = brain.buildSentence();
-			channel.sendMessage(sentance);
+			if(sentance.isEmpty() || sentance.equals(" "))
+				channel.sendMessage("...");
+			else
+				channel.sendMessage(sentance);
 			System.out.println("INPUT: " + input);
 			System.out.println("OUTPUT: " + sentance);
 		}
-//		BrainMuxer.saveBrain(brain, guild);
+		BrainMuxer.saveBrain(brain, guild);
 	}
 	
 	public void digestSentance(String input)
